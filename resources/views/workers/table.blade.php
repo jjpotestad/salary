@@ -25,6 +25,10 @@
                            class='btn btn-default btn-xs'>
                             <i class="far fa-edit"></i>
                         </a>
+                        <a href="{{ route('listByWorker', [$worker->id]) }}"
+                           class='btn btn-default btn-xs'>
+                            <i class="fas fa-truck"></i>
+                        </a>
                         {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('¿Estás seguro de eliminar al trabajador?')"]) !!}
                     </div>
                     {!! Form::close() !!}

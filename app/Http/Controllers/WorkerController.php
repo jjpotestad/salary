@@ -60,7 +60,7 @@ class workerController extends AppBaseController
 
         $worker = $this->workerRepository->create($input);
 
-        Flash::success('El trabajador de guardó correctamente.');
+        Flash::success('El trabajador se guardó correctamente.');
 
         return redirect(route('workers.index'));
     }
