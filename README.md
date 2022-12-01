@@ -1,8 +1,9 @@
-# Sistema de control de salarial
+# Sistema de control salarial
 ### Se utilizaron las siguientes tecnologías:
  - IDE: Visual Studio Code
  - Lenguaje y framework: php v7.4 y Laravel v8
  - Arquitectura: MVC
+ - BD: MySQL
 
 ### Pasos para el despliegue del sitio:
   - Clonar el repositorio y crear el archivo **.env** copiando el archivo **.env.example**
