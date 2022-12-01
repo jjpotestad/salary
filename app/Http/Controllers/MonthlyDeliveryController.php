@@ -11,6 +11,7 @@ use Flash;
 use Response;
 use App\Models\Worker;
 use App\Models\MonthlyDelivery;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MonthlyDeliveryController extends AppBaseController
 {
@@ -198,7 +199,7 @@ class MonthlyDeliveryController extends AppBaseController
     private function getBaseSalary($id){
         $monthlyDelivery = $this->monthlyDeliveryRepository->find($id);
         $hourly_wage = 30;
-        $base_salary = $monthlyDelivery->hours_worked * $hourly_wage;
+        $base_salary = (int) $monthlyDelivery->hours_worked * $hourly_wage;
 
         return $base_salary;
     }
@@ -263,7 +264,7 @@ class MonthlyDeliveryController extends AppBaseController
         $base_salary = $this->getBaseSalary($id);
         $payment_for_deliveries = $this->getPaymentForDeliveries($id);
         $bonus_salary = $this->getBonusSalary($id);
-        $total = $base_salary+$payment_for_deliveries+$bonus_salary;   
+        $total = (int) $base_salary+(int) $payment_for_deliveries+(int) $bonus_salary;   
 
         return $total;
     }
@@ -280,9 +281,9 @@ class MonthlyDeliveryController extends AppBaseController
     private function getTaxes($id){
         
         $salary_before = $this->getSalaryBeforeTaxes($id); 
-        $tax_basic = ($salary_before * 0.09);
+        $tax_basic = ((int) $salary_before * 0.09);
         if($salary_before >= 10000){
-            $tax_extra = ($salary_before * 0.09);
+            $tax_extra = ((int) $salary_before * 0.09);
         }else{
             $tax_extra = 0;
         }
@@ -303,7 +304,7 @@ class MonthlyDeliveryController extends AppBaseController
     public function getMonthySalary($id){
         $salary_before = $this->getSalaryBeforeTaxes($id);
         $taxes = $this->getTaxes($id);
-        $salary = $salary_before - $taxes;
+        $salary = (int) $salary_before - (int) $taxes;
         
         return $salary;
     }
@@ -334,16 +335,39 @@ class MonthlyDeliveryController extends AppBaseController
      * @return Response
      */
     public function getSalary($id){
+        $total = $this->getMonthySalary($id)+$this->getGroceryCoupon($id);
         $data = [
             'base_salary' => $this->getBaseSalary($id),
             'payment_for_deliveries' => $this->getPaymentForDeliveries($id),
             'bonus_salary' => $this->getBonusSalary($id),
             'taxes' => $this->getTaxes($id),
             'monthly_salary' => $this->getMonthySalary($id),
-            'grocery_coupon' => $this->getGroceryCoupon($id)
+            'grocery_coupon' => $this->getGroceryCoupon($id),
+            'total' => $total,
         ];
 
         return $data;
     }
-    
+
+    /**
+     * Get PDF salary from specified MonthlyDelivery.
+     *
+     * @param int $id
+     *
+     * @throws \Exception
+     *
+     * @return Response
+     */
+    public function getPDFSalary($id){
+        $monthlyDelivery = $this->monthlyDeliveryRepository->find($id);
+
+        if (empty($monthlyDelivery)) {
+            Flash::error('La entrega mensual no se encuentra');
+
+            return redirect(route('monthlyDeliveries.index'));
+        }
+        $dataSalary = $this->getSalary($monthlyDelivery->id);
+        $pdf = Pdf::loadView('monthly_deliveries.pdf', ['monthlyDelivery' => $monthlyDelivery, 'dataSalary' => $dataSalary]);
+        return $pdf->download('monthly_deliveries.pdf');
+    }    
 }

@@ -27,6 +27,10 @@
                            class='btn btn-default btn-xs'>
                             <i class="far fa-edit"></i>
                         </a>
+                        <a href="{{ route('getPdf', [$monthlyDelivery->id]) }}"
+                           class='btn btn-default btn-xs'>
+                            <i class="far fa-file-pdf"></i>
+                        </a>
                         {!! Form::button('<i class="far fa-trash-alt"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-xs', 'onclick' => "return confirm('¿Estás seguro de eliminar la entrega mensual?')"]) !!}
                     </div>
                     {!! Form::close() !!}

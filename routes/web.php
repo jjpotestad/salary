@@ -28,6 +28,6 @@ Route::resource('workers', App\Http\Controllers\workerController::class);
 
 Route::resource('monthlyDeliveries', App\Http\Controllers\MonthlyDeliveryController::class);
 
-Route::get('/listByWorker/{id}', [App\Http\Controllers\MonthlyDeliveryController::class, 'listByWorker'])->name('listByWorker');
+Route::get('/monthlyDeliveries/listByWorker/{id}', [App\Http\Controllers\MonthlyDeliveryController::class, 'listByWorker'])->name('listByWorker');
 
-Route::get('/getData/{id}', [App\Http\Controllers\MonthlyDeliveryController::class, 'getData'])->name('getData');
+Route::get('/monthlyDeliveries/getPdf/{id}', [App\Http\Controllers\MonthlyDeliveryController::class, 'getPDFSalary'])->name('getPdf');

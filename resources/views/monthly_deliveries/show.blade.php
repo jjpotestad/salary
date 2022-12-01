@@ -12,6 +12,11 @@
                        href="{{ route('monthlyDeliveries.index') }}">
                         Regresar
                     </a>
+                    <a href="{{ route('getPdf', [$monthlyDelivery->id]) }}"
+                        class='btn btn-default float-right'>
+                        Exportar
+                        <i class="far fa-file-pdf"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -46,9 +51,14 @@
                         {!! Form::label('monthly_salary', 'Sueldo mensual:') !!}
                         <p>{{ $dataSalary['monthly_salary'] }}</p
                         >
+
                         <!-- Grocery coupon Field -->
                         {!! Form::label('grocery_coupon', 'Vale de despensa:') !!}
                         <p>{{ $dataSalary['grocery_coupon'] }}</p>
+
+                        <!-- Total Field -->
+                        {!! Form::label('total', 'Monto total:') !!}
+                        <p>{{ $dataSalary['total'] }}</p>
                     </div>
                 </div>
             </div>
