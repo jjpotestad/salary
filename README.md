@@ -11,4 +11,5 @@
   - Crear una BD en MySQL con el nombre de **salarydb**
   - Ejecutar en la consola **composer update** para instalar las dependencias
   - Ejecutar en la consola **php artisan migrate:fresh --seed** para insertar datos de prueba a la BD
+  - Ejecutar en la consola **php artisan key:generate** para generar el key del sitio
   - Acceder al login de sitio usando el email **julio.potestad@gmail.com** y el password **admin*123**
