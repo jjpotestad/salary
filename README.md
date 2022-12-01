@@ -4,6 +4,7 @@
  - Lenguaje y framework: php v7.4 y Laravel v8
  - Arquitectura: MVC
  - BD: MySQL
+ - Gestor de dependencias: composer v2
 
 ### Pasos para el despliegue del sitio:
   - Clonar el repositorio y crear el archivo **.env** copiando el archivo **.env.example**
