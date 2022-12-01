@@ -335,7 +335,7 @@ class MonthlyDeliveryController extends AppBaseController
      * @return Response
      */
     public function getSalary($id){
-        $total = $this->getMonthySalary($id)+$this->getGroceryCoupon($id);
+        $total = (int) $this->getMonthySalary($id)+(int) $this->getGroceryCoupon($id);
         $data = [
             'base_salary' => $this->getBaseSalary($id),
             'payment_for_deliveries' => $this->getPaymentForDeliveries($id),
